@@ -1,0 +1,14 @@
+*.iml
+.idea/
+target/
+/out/
+.idea_modules/
+com_crashlytics_export_strings.xml
+crashlytics.properties
+crashlytics-build.properties
+*.class
+*.jar
+*.war
+*.ear
+hs_err_pid*
+
