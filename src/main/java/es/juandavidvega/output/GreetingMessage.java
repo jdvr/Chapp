@@ -1,11 +1,11 @@
-package es.juandavidvega.hello;
+package es.juandavidvega.output;
 
 
-public class Greeting {
+public class GreetingMessage {
 
     private final String content;
 
-    public Greeting(String content) {
+    public GreetingMessage(String content) {
         this.content = content;
     }
 

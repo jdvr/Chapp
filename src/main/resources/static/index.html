@@ -1,66 +1,41 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <title>Hello WebSocket</title>
-    <script src="sockjs-0.3.4.js"></script>
-    <script src="stomp.js"></script>
-    <script type="text/javascript">
-        var stompClient = null;
+<html lang="es">
+    <head>
+        <title>Hello WebSocket</title>
+        <script src="sockjs-0.3.4.js"></script>
+        <script src="stomp.js"></script>
+        <script src="chat.js"></script>
+    </head>
+    <body onload="disconnect()">
 
-        function setConnected(connected) {
-            document.getElementById('connect').disabled = connected;
-            document.getElementById('disconnect').disabled = !connected;
-            document.getElementById('conversationDiv').style.visibility = connected ? 'visible' : 'hidden';
-            document.getElementById('response').innerHTML = '';
-        }
+        <div>
 
-        function connect() {
-            var socket = new SockJS('/hello');
-            stompClient = Stomp.over(socket);
-            stompClient.connect({}, function(frame) {
-                setConnected(true);
-                console.log('Connected: ' + frame);
-                stompClient.subscribe('/topic/greetings', function(greeting){
-                    showGreeting(JSON.parse(greeting.body).content);
-                });
-            });
-        }
+            <div>
+                <button id="connect" onclick="connect();">Connect</button>
+                <button id="disconnect" disabled="disabled" onclick="disconnect();">Disconnect</button>
+            </div>
 
-        function disconnect() {
-            if (stompClient != null) {
-                stompClient.disconnect();
-            }
-            setConnected(false);
-            console.log("Disconnected");
-        }
+            <div id="conversationDiv">
 
-        function sendName() {
-            var name = document.getElementById('name').value;
-            stompClient.send("/app/hello", {}, JSON.stringify({ 'name': name }));
-        }
+                <div id="login">
+                    <label>What is your name?</label><input type="text" id="name" />
+                    <button id="sendName" onclick="joinChat();">Send</button>
+                </div>
 
-        function showGreeting(message) {
-            var response = document.getElementById('response');
-            var p = document.createElement('p');
-            p.style.wordWrap = 'break-word';
-            p.appendChild(document.createTextNode(message));
-            response.appendChild(p);
-        }
-    </script>
-</head>
-<body onload="disconnect()">
-<noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being enabled. Please enable
-    Javascript and reload this page!</h2></noscript>
-<div>
-    <div>
-        <button id="connect" onclick="connect();">Connect</button>
-        <button id="disconnect" disabled="disabled" onclick="disconnect();">Disconnect</button>
-    </div>
-    <div id="conversationDiv">
-        <label>What is your name?</label><input type="text" id="name" />
-        <button id="sendName" onclick="sendName();">Send</button>
-        <p id="response"></p>
-    </div>
-</div>
-</body>
+                <hr/>
+
+                <div id="chatBox"></div>
+
+                <hr/>
+
+                <div id="chatMessage">
+                    <label>Write a message</label><textarea id="message" ></textarea>
+                    <button id="sendMessage" onclick="sendMessage()">Send</button>
+                </div>
+
+            </div>
+
+        </div>
+
+    </body>
 </html>
