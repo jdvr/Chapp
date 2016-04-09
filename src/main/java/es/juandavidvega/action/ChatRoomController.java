@@ -41,9 +41,6 @@ public class ChatRoomController {
         return  channelLoader.loadMessages();
     }
 
-
-
-
     private void simulatedDelay() throws InterruptedException {
         Thread.sleep(3000);
     }
