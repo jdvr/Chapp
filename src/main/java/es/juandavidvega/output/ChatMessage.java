@@ -6,14 +6,14 @@ import es.juandavidvega.input.UserMessage;
 
 public class ChatMessage {
 
-    private String content;
-    private String sender;
-    private Date sendDate;
+    private final String content;
+    private final String sender;
+    private final Date sendDate;
 
-    public ChatMessage(UserMessage userMessage) {
-        this.content = userMessage.getContent();
-        this.sender = userMessage.getSender();
-        this.sendDate = userMessage.getSendDate();
+    public ChatMessage(String content, String sender, Date sendDate) {
+        this.content = content;
+        this.sender = sender;
+        this.sendDate = sendDate;
     }
 
     public String getContent() {

@@ -24,7 +24,7 @@ public class ChatRoomController {
     @SendTo("/chat/new/message")
     public ChatMessage message(UserMessage message) throws Exception {
         simulatedDelay();
-        return new ChatMessage(message);
+        return new ChatMessage(message.getContent(), message.getSender(), message.getSendDate());
     }
 
 

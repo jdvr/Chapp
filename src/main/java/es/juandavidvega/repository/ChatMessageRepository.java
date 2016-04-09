@@ -1,4 +1,10 @@
 package es.juandavidvega.repository;
 
-public interface ChatMessageRepository {
+import es.juandavidvega.output.ChatMessage;
+import es.juandavidvega.output.ChatMessages;
+
+interface ChatMessageRepository {
+    void save(ChatMessage message);
+    ChatMessages loadChannelMessages();
+
 }
