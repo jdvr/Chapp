@@ -63,7 +63,7 @@ function showGreeting(message) {
 
 
 function showMessage(userMessage) {
-    addContentToChat(userMessage.sender + " said " + userMessage.content + " at " + new Date(userMessage.sendDate));
+    addContentToChat(userMessage.sender + " said <b>" + userMessage.content + "</b> at " + new Date(userMessage.sendDate));
 }
 
 function addContentToChat(text){
