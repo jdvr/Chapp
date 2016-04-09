@@ -1,5 +1,9 @@
 package es.juandavidvega.action;
 
+import es.juandavidvega.output.ChatMessages;
+import es.juandavidvega.service.ChannelLoader;
+import es.juandavidvega.service.ChatMessageProcessor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
@@ -13,6 +17,15 @@ import es.juandavidvega.output.GreetingMessage;
 @Controller
 public class ChatRoomController {
 
+    private final ChatMessageProcessor chatMessageProcessor;
+    private final ChannelLoader channelLoader;
+
+    @Autowired
+    public ChatRoomController(ChatMessageProcessor chatMessageProcessor, ChannelLoader channelLoader) {
+        this.chatMessageProcessor = chatMessageProcessor;
+        this.channelLoader = channelLoader;
+    }
+
     @MessageMapping("/hello")
     @SendTo("/chat/joined")
     public GreetingMessage join(HelloMessage message) throws Exception {
@@ -22,9 +35,10 @@ public class ChatRoomController {
 
     @MessageMapping("/send/message")
     @SendTo("/chat/new/message")
-    public ChatMessage message(UserMessage message) throws Exception {
+    public ChatMessages message(UserMessage message) throws Exception {
         simulatedDelay();
-        return new ChatMessage(message.getContent(), message.getSender(), message.getSendDate());
+        chatMessageProcessor.process(message);
+        return  channelLoader.loadMessages();
     }
 
 

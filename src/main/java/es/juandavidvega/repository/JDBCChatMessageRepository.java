@@ -10,10 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-@Repository
+@Repository("chatMessageRepository")
 public class JDBCChatMessageRepository implements ChatMessageRepository {
 
-    static final String CreateQuery = "insert into Account (content, sender, sendDate) values (?, ?, ?)";
+    static final String CreateQuery = "insert into message (content, sender, sendDate) values (?, ?, ?)";
     static final String FindAllQuery = "select content, sender, sendDate from message";
     private final JdbcTemplate jdbcTemplate;
 

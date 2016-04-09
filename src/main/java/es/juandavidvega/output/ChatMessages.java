@@ -9,4 +9,8 @@ public class ChatMessages {
     public void add(ChatMessage element) {
         messages.add(element);
     }
+
+    public List<ChatMessage> getMessages() {
+        return messages;
+    }
 }
