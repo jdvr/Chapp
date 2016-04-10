@@ -26,11 +26,16 @@ public class JDBCChatMessageRepository implements ChatMessageRepository {
     @Override
     @Transactional
     public void save(ChatMessage message) {
-        jdbcTemplate.update(
-                CreateQuery,
-                message.getContent(),
-                message.getSendDate(),
-                message.getSendDate());
+        try{
+         jdbcTemplate.update(
+            CreateQuery,
+            message.getContent(),
+            message.getSender(),
+            message.getSendDate());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 
     @Override
