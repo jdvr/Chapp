@@ -1,15 +1,12 @@
 package es.juandavidvega.output;
 
 
-public class GreetingMessage {
+import java.util.Date;
 
-    private final String content;
+public class GreetingMessage extends ChatMessage{
 
-    public GreetingMessage(String content) {
-        this.content = content;
+    public GreetingMessage(String userName) {
+        super("Hello " + userName + ", welcome to chat!", userName, new Date());
     }
 
-    public String getContent() {
-        return content;
-    }
 }

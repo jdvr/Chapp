@@ -28,17 +28,19 @@ public class ChatRoomController {
 
     @MessageMapping("/hello")
     @SendTo("/chat/joined")
-    public GreetingMessage join(HelloMessage message) throws Exception {
+    public ChatMessages join(HelloMessage message) throws Exception {
         simulatedDelay();
-        return new GreetingMessage("Hello " + message.getSender() + ", welcome to chat!");
+        GreetingMessage greetingMessage = new GreetingMessage("Hello " + message.getSender() + ", welcome to chat!");
+        ChatMessages messages = channelLoader.loadMessages();
+        messages.add(greetingMessage);
+        return messages;
     }
 
     @MessageMapping("/send/message")
     @SendTo("/chat/new/message")
-    public ChatMessages message(UserMessage message) throws Exception {
+    public ChatMessage message(UserMessage message) throws Exception {
         simulatedDelay();
-        chatMessageProcessor.process(message);
-        return  channelLoader.loadMessages();
+        return chatMessageProcessor.process(message);
     }
 
     private void simulatedDelay() throws InterruptedException {

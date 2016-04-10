@@ -17,8 +17,9 @@ public class ChatMessageProcessor {
         this.chatMessageRepository = chatMessageRepository;
     }
 
-    public void process(UserMessage rawMessage){
+    public ChatMessage process(UserMessage rawMessage){
         ChatMessage message = new ChatMessage(rawMessage.getContent(), rawMessage.getSender(), rawMessage.getSendDate());
         chatMessageRepository.save(message);
+        return message;
     }
 }
