@@ -34,11 +34,11 @@ function connect() {
         console.log('Connected: ' + frame);
 
         stompClient.subscribe(NewJoinURL, function(greeting){
-            showGreeting(JSON.parse(greeting.body).content);
+            showGreeting(JSON.parse(greeting.body).messages);
         });
 
         stompClient.subscribe(NewMessageURL, function(chatMessage){
-            showMessage(JSON.parse(chatMessage.body));
+            showMessage(JSON.parse(chatMessage.body).messages);
         });
 
 
@@ -73,7 +73,7 @@ function showGreeting(messages) {
 
 function showMessage(messages) {
     messages.forEach(function (message) {
-        addContentToChat(messageContentMappers[message.type]());
+        addContentToChat(messageContentMappers[message.type](message));
     });
 }
 
