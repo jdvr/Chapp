@@ -30,7 +30,7 @@ public class ChatRoomController {
     @SendTo("/chat/joined")
     public ChatMessages join(HelloMessage message) throws Exception {
         simulatedDelay();
-        GreetingMessage greetingMessage = new GreetingMessage("Hello " + message.getSender() + ", welcome to chat!");
+        GreetingMessage greetingMessage = new GreetingMessage(message.getSender());
         ChatMessages messages = channelLoader.loadMessages();
         messages.add(greetingMessage);
         return messages;
