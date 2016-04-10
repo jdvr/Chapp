@@ -38,9 +38,12 @@ public class ChatRoomController {
 
     @MessageMapping("/send/message")
     @SendTo("/chat/new/message")
-    public ChatMessage message(UserMessage message) throws Exception {
+    public ChatMessages message(UserMessage message) throws Exception {
         simulatedDelay();
-        return chatMessageProcessor.process(message);
+        ChatMessages messages = new ChatMessages();
+        ChatMessage processedMessage = chatMessageProcessor.process(message);
+        messages.add(processedMessage);
+        return messages;
     }
 
     private void simulatedDelay() throws InterruptedException {

@@ -9,4 +9,8 @@ public class GreetingMessage extends ChatMessage{
         super("Hello " + userName + ", welcome to chat!", userName, new Date());
     }
 
+    @Override
+    public MessageType getType() {
+        return MessageType.Greeting;
+    }
 }

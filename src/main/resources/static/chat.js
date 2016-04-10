@@ -9,6 +9,15 @@ var SendMessageURL = "/app/send/message";
 
 var userName = "@default";
 
+var messageContentMappers = {
+    'Standard': function (message) {
+        return message.sender + " said <b>" + message.content + "</b> at " + new Date(message.sendDate);
+    },
+    'Greeting': function (message) {
+        return message.content;
+    }
+};
+
 function setConnected(connected) {
     document.getElementById('connect').disabled = connected;
     document.getElementById('disconnect').disabled = !connected;
@@ -55,22 +64,24 @@ function sendMessage() {
     document.getElementById('message').value = '';
 }
 
-function showGreeting(message) {
-    addContentToChat(message);
+function showGreeting(messages) {
+    showMessage(messages);
     showChatMessageBox();
     hideLoginBox();
 }
 
 
-function showMessage(userMessage) {
-    addContentToChat(userMessage.sender + " said <b>" + userMessage.content + "</b> at " + new Date(userMessage.sendDate));
+function showMessage(messages) {
+    messages.forEach(function (message) {
+        addContentToChat(messageContentMappers[message.type]());
+    });
 }
 
 function addContentToChat(text){
     var chatBox = document.getElementById('chatBox');
     var p = document.createElement('p');
     p.style.wordWrap = 'break-word';
-    p.appendChild(document.createTextNode(text));
+    p.innerHTML = text;
     chatBox.appendChild(p);
 }
 

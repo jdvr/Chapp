@@ -27,4 +27,8 @@ public class ChatMessage {
     public Date getSendDate() {
         return sendDate;
     }
+
+    public MessageType getType(){
+        return MessageType.Standard;
+    }
 }
