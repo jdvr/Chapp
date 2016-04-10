@@ -3,6 +3,7 @@ package es.juandavidvega.repository;
 import es.juandavidvega.output.ChatMessage;
 import es.juandavidvega.output.ChatMessages;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,10 +35,14 @@ public class JDBCChatMessageRepository implements ChatMessageRepository {
 
     @Override
     public ChatMessages loadChannelMessages() {
-        return jdbcTemplate.queryForObject(
-                FindAllQuery,
-                this::createMessagesFromResult
-        );
+        try{
+            return jdbcTemplate.queryForObject(
+                    FindAllQuery,
+                    this::createMessagesFromResult
+            );
+        }catch (EmptyResultDataAccessException emptyData){
+            return new ChatMessages();
+        }
     }
 
     private ChatMessages createMessagesFromResult(ResultSet resultSet, int rowNumber) {
